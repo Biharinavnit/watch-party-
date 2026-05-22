@@ -7,13 +7,17 @@ const app = express();
 
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Watch Party Backend Running");
+});
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://watch-party-navnit.netlify.app"
+      "https://watch-party-eight-beige.vercel.app"
     ],
     methods: ["GET", "POST"]
   }
@@ -35,6 +39,13 @@ io.on("connection", (socket) => {
     if (!rooms[roomId]) {
       rooms[roomId] = [];
     }
+
+    // CHECK USER ALREADY EXISTS
+    const existingUser = rooms[roomId].find(
+      user => user.socketId === socket.id
+    );
+
+    if (existingUser) return;
 
     // ROLE
     const role =
@@ -250,6 +261,11 @@ io.on("connection", (socket) => {
         "user_joined",
         rooms[roomId]
       );
+
+      // DELETE EMPTY ROOM
+      if (rooms[roomId].length === 0) {
+        delete rooms[roomId];
+      }
 
     }
 
