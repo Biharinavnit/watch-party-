@@ -28,7 +28,7 @@ Backend:
 - Socket.IO
 
 Deployment:
-- Netlify
+- Vercel
 - Render
 
 ---
