@@ -8,7 +8,7 @@ Users can create or join rooms and watch YouTube videos together with synchroniz
 
 # 🚀 Live Demo
 
-Frontend deployed publicly using Netlify.https://watch-party-navnit.netlify.app/
+Frontend deployed publicly using Vercel.https://watch-party-eight-beige.vercel.app/
 
 Backend deployed publicly using Render.
 
