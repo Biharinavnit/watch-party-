@@ -199,7 +199,11 @@ io.on("connection", (socket) => {
       user => user.socketId === userId
     );
 
-    if (targetUser) {
+    // HOST CANNOT CHANGE OWN ROLE
+    if (
+      targetUser &&
+      targetUser.socketId !== socket.id
+    ) {
 
       targetUser.role = role;
 
