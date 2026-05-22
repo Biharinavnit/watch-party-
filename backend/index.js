@@ -11,7 +11,10 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://watch-party-navnit.netlify.app"
+    ],
     methods: ["GET", "POST"]
   }
 });
@@ -67,6 +70,8 @@ io.on("connection", (socket) => {
       user => user.socketId === socket.id
     );
 
+    if (!currentUser) return;
+
     // ROLE CHECK
     if (
       currentUser.role !== "HOST" &&
@@ -90,6 +95,8 @@ io.on("connection", (socket) => {
       user => user.socketId === socket.id
     );
 
+    if (!currentUser) return;
+
     if (
       currentUser.role !== "HOST" &&
       currentUser.role !== "MODERATOR"
@@ -111,6 +118,8 @@ io.on("connection", (socket) => {
     const currentUser = roomUsers.find(
       user => user.socketId === socket.id
     );
+
+    if (!currentUser) return;
 
     if (
       currentUser.role !== "HOST" &&
@@ -136,6 +145,8 @@ io.on("connection", (socket) => {
     const currentUser = roomUsers.find(
       user => user.socketId === socket.id
     );
+
+    if (!currentUser) return;
 
     if (
       currentUser.role !== "HOST" &&
@@ -165,6 +176,8 @@ io.on("connection", (socket) => {
     const currentUser = roomUsers.find(
       user => user.socketId === socket.id
     );
+
+    if (!currentUser) return;
 
     // ONLY HOST
     if (currentUser.role !== "HOST") {
@@ -201,6 +214,8 @@ io.on("connection", (socket) => {
     const currentUser = roomUsers.find(
       user => user.socketId === socket.id
     );
+
+    if (!currentUser) return;
 
     // ONLY HOST
     if (currentUser.role !== "HOST") {
@@ -242,8 +257,13 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(5000, () => {
+const PORT =
+  process.env.PORT || 5000;
 
-  console.log("Server running on port 5000");
+server.listen(PORT, () => {
+
+  console.log(
+    `Server running on port ${PORT}`
+  );
 
 });
